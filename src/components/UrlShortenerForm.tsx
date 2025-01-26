@@ -50,12 +50,12 @@ export const UrlShortenerForm = () => {
             placeholder="Enter your long URL"
             value={url}
             onChange={(e) => setUrl(e.target.value)}
-            className="flex-1 bg-white/80 backdrop-blur-sm border-[#D6BCFA] focus:border-[#9b87f5] transition-all"
+            className="flex-1 bg-white/80 backdrop-blur-sm border-[#A5D6A7] focus:border-[#4CAF50] transition-all"
           />
           <Button 
             type="submit" 
             disabled={isLoading}
-            className="bg-gradient-to-r from-[#9b87f5] to-[#7E69AB] hover:from-[#8b77e5] hover:to-[#6E599B] transition-all duration-300"
+            className="bg-gradient-to-r from-[#2E7D32] to-[#388E3C] hover:from-[#1B5E20] hover:to-[#2E7D32] transition-all duration-300"
           >
             {isLoading ? (
               "Shortening..."
@@ -74,10 +74,10 @@ export const UrlShortenerForm = () => {
             <p className="font-medium text-sm text-gray-600">Your shortened URL:</p>
             <div className="flex gap-2">
               <Button variant="ghost" size="sm" onClick={copyToClipboard}>
-                <Copy className="h-4 w-4 text-[#9b87f5] hover:text-[#7E69AB] transition-colors" />
+                <Copy className="h-4 w-4 text-[#4CAF50] hover:text-[#2E7D32] transition-colors" />
               </Button>
               <Button variant="ghost" size="sm" onClick={() => window.open(shortUrl, '_blank')}>
-                <ExternalLink className="h-4 w-4 text-[#9b87f5] hover:text-[#7E69AB] transition-colors" />
+                <ExternalLink className="h-4 w-4 text-[#4CAF50] hover:text-[#2E7D32] transition-colors" />
               </Button>
             </div>
           </div>
@@ -85,7 +85,7 @@ export const UrlShortenerForm = () => {
             href={shortUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-[#9b87f5] hover:text-[#7E69AB] transition-colors break-all story-link"
+            className="text-[#4CAF50] hover:text-[#2E7D32] transition-colors break-all story-link"
           >
             {shortUrl}
           </a>
