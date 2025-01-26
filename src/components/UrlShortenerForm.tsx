@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
-import { Link2, Copy } from "lucide-react";
+import { Link2, Copy, ExternalLink } from "lucide-react";
 
 export const UrlShortenerForm = () => {
   const [url, setUrl] = useState("");
@@ -50,9 +50,13 @@ export const UrlShortenerForm = () => {
             placeholder="Enter your long URL"
             value={url}
             onChange={(e) => setUrl(e.target.value)}
-            className="flex-1"
+            className="flex-1 bg-white/80 backdrop-blur-sm border-purple-100 focus:border-purple-300 transition-all"
           />
-          <Button type="submit" disabled={isLoading}>
+          <Button 
+            type="submit" 
+            disabled={isLoading}
+            className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 transition-all duration-300"
+          >
             {isLoading ? (
               "Shortening..."
             ) : (
@@ -65,18 +69,23 @@ export const UrlShortenerForm = () => {
       </form>
 
       {shortUrl && (
-        <div className="p-4 bg-white rounded-lg shadow-lg space-y-2 animate-fade-in">
+        <div className="p-6 bg-white/80 backdrop-blur-sm rounded-lg shadow-lg space-y-4 animate-fade-in">
           <div className="flex items-center justify-between">
             <p className="font-medium text-sm text-gray-600">Your shortened URL:</p>
-            <Button variant="ghost" size="sm" onClick={copyToClipboard}>
-              <Copy className="h-4 w-4" />
-            </Button>
+            <div className="flex gap-2">
+              <Button variant="ghost" size="sm" onClick={copyToClipboard}>
+                <Copy className="h-4 w-4 text-purple-600 hover:text-purple-700 transition-colors" />
+              </Button>
+              <Button variant="ghost" size="sm" onClick={() => window.open(shortUrl, '_blank')}>
+                <ExternalLink className="h-4 w-4 text-purple-600 hover:text-purple-700 transition-colors" />
+              </Button>
+            </div>
           </div>
           <a
             href={shortUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-blue-600 hover:text-blue-800 break-all"
+            className="text-purple-600 hover:text-purple-700 transition-colors break-all story-link"
           >
             {shortUrl}
           </a>
