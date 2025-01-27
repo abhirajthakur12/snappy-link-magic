@@ -20,7 +20,7 @@ const Index = () => {
       
       <div className="w-full max-w-md relative">
         <div className="absolute -top-6 -left-6 w-12 h-12 bg-white/50 rounded-full backdrop-blur-sm shadow-lg" />
-        <div className="absolute -bottom-6 -right-6 w-12 h-12 bg-white/50 rounded-full backdrop-blur-sm shadow-lg" />
+        <div className="absolute top-[calc(100%+1.5rem)] right-6 w-12 h-12 bg-white/50 rounded-full backdrop-blur-sm shadow-lg" />
         <UrlShortenerForm />
       </div>
     </div>
