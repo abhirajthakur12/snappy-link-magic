@@ -1,5 +1,5 @@
 import { UrlShortenerForm } from "@/components/UrlShortenerForm";
-import { Heart, Link2 } from "lucide-react";
+import { Link2 } from "lucide-react";
 
 const Index = () => {
   return (
@@ -23,10 +23,6 @@ const Index = () => {
         <div className="absolute -bottom-6 -right-6 w-12 h-12 bg-white/50 rounded-full backdrop-blur-sm shadow-lg" />
         <UrlShortenerForm />
       </div>
-      
-      <footer className="fixed bottom-4 text-center text-sm text-gray-600 flex items-center gap-2 animate-fade-in bg-white/50 px-4 py-2 rounded-full backdrop-blur-sm shadow-lg">
-        Made with <Heart className="w-4 h-4 text-pink-500" /> using Lovable
-      </footer>
     </div>
   );
 };
