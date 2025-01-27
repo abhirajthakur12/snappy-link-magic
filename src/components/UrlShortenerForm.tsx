@@ -50,29 +50,25 @@ export const UrlShortenerForm = () => {
             placeholder="Enter your long URL"
             value={url}
             onChange={(e) => setUrl(e.target.value)}
-            className="flex-1 bg-white/80 backdrop-blur-sm border-[#2E7D32]/30 focus:border-[#2E7D32] transition-all shadow-sm"
+            className="flex-1 bg-white/80 backdrop-blur-sm border-indigo-200 focus:border-indigo-400 transition-all shadow-sm"
           />
           <Button 
             type="submit" 
             disabled={isLoading}
-            className="bg-[#2E7D32] hover:bg-[#1B5E20] transition-all duration-300 shadow-lg hover:shadow-xl relative overflow-hidden group"
+            className="bg-indigo-600 hover:bg-indigo-700 transition-all duration-300 shadow-lg hover:shadow-xl"
           >
-            <span className="relative z-10 flex items-center gap-2">
-              {isLoading ? (
-                "Shortening..."
-              ) : (
-                <>
-                  Shorten
-                  <Link2 className="h-4 w-4 transition-transform group-hover:rotate-12" />
-                </>
-              )}
-            </span>
+            {isLoading ? "Shortening..." : (
+              <span className="flex items-center gap-2">
+                Shorten
+                <Link2 className="h-4 w-4" />
+              </span>
+            )}
           </Button>
         </div>
       </form>
 
       {shortUrl && (
-        <div className="p-6 bg-white/90 backdrop-blur-sm rounded-lg shadow-lg space-y-4 animate-fade-in border border-[#2E7D32]/10">
+        <div className="p-6 bg-white/90 backdrop-blur-sm rounded-lg shadow-lg space-y-4 animate-fade-in border border-indigo-100">
           <div className="flex items-center justify-between">
             <p className="font-medium text-sm text-gray-700">Your shortened URL:</p>
             <div className="flex gap-2">
@@ -80,17 +76,17 @@ export const UrlShortenerForm = () => {
                 variant="ghost" 
                 size="sm" 
                 onClick={copyToClipboard}
-                className="hover:bg-[#2E7D32]/10"
+                className="hover:bg-indigo-50"
               >
-                <Copy className="h-4 w-4 text-[#2E7D32] transition-colors" />
+                <Copy className="h-4 w-4 text-indigo-600" />
               </Button>
               <Button 
                 variant="ghost" 
                 size="sm" 
                 onClick={() => window.open(shortUrl, '_blank')}
-                className="hover:bg-[#2E7D32]/10"
+                className="hover:bg-indigo-50"
               >
-                <ExternalLink className="h-4 w-4 text-[#2E7D32] transition-colors" />
+                <ExternalLink className="h-4 w-4 text-indigo-600" />
               </Button>
             </div>
           </div>
@@ -98,7 +94,7 @@ export const UrlShortenerForm = () => {
             href={shortUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-[#2E7D32] hover:text-[#1B5E20] transition-colors break-all story-link block font-medium"
+            className="text-indigo-600 hover:text-indigo-700 transition-colors break-all block font-medium"
           >
             {shortUrl}
           </a>
