@@ -22,19 +22,35 @@ export const UrlShortenerForm = () => {
     }
 
     setIsLoading(true);
-    // Simulate API call and store the original URL in localStorage
-    setTimeout(() => {
-      const shortCode = Math.random().toString(36).substr(2, 6);
-      const newShortUrl = `https://short.url/${shortCode}`;
-      // Store the mapping in localStorage
-      localStorage.setItem(shortCode, url);
+    try {
+      const response = await fetch('/shorten', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ url }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to shorten URL');
+      }
+
+      const data = await response.json();
+      const newShortUrl = `https://short.url/${data.shortCode}`;
       setShortUrl(newShortUrl);
-      setIsLoading(false);
       toast({
         title: "Success!",
         description: "Your URL has been shortened",
       });
-    }, 1000);
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to shorten URL",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const copyToClipboard = () => {
@@ -45,15 +61,22 @@ export const UrlShortenerForm = () => {
     });
   };
 
-  const handleRedirect = () => {
-    // Extract the short code from the URL
+  const handleRedirect = async () => {
     const shortCode = shortUrl.split('/').pop();
     if (shortCode) {
-      // Get the original URL from localStorage
-      const originalUrl = localStorage.getItem(shortCode);
-      if (originalUrl) {
-        // Open in new tab with the original URL
-        window.open(originalUrl, '_blank');
+      try {
+        const response = await fetch(`/shorten/${shortCode}`);
+        if (!response.ok) {
+          throw new Error('Failed to fetch original URL');
+        }
+        const data = await response.json();
+        window.open(data.originalUrl, '_blank');
+      } catch (error) {
+        toast({
+          title: "Error",
+          description: "Failed to redirect to original URL",
+          variant: "destructive",
+        });
       }
     }
   };
