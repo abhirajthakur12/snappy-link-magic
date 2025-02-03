@@ -22,9 +22,13 @@ export const UrlShortenerForm = () => {
     }
 
     setIsLoading(true);
-    // Simulate API call
+    // Simulate API call and store the original URL in localStorage
     setTimeout(() => {
-      setShortUrl("https://short.url/" + Math.random().toString(36).substr(2, 6));
+      const shortCode = Math.random().toString(36).substr(2, 6);
+      const newShortUrl = `https://short.url/${shortCode}`;
+      // Store the mapping in localStorage
+      localStorage.setItem(shortCode, url);
+      setShortUrl(newShortUrl);
       setIsLoading(false);
       toast({
         title: "Success!",
@@ -39,6 +43,19 @@ export const UrlShortenerForm = () => {
       title: "Copied!",
       description: "URL copied to clipboard",
     });
+  };
+
+  const handleRedirect = () => {
+    // Extract the short code from the URL
+    const shortCode = shortUrl.split('/').pop();
+    if (shortCode) {
+      // Get the original URL from localStorage
+      const originalUrl = localStorage.getItem(shortCode);
+      if (originalUrl) {
+        // Open in new tab with the original URL
+        window.open(originalUrl, '_blank');
+      }
+    }
   };
 
   return (
@@ -87,21 +104,19 @@ export const UrlShortenerForm = () => {
               <Button 
                 variant="ghost" 
                 size="sm" 
-                onClick={() => window.open(shortUrl, '_blank')}
+                onClick={handleRedirect}
                 className="hover:bg-violet-50"
               >
                 <ExternalLink className="h-4 w-4 text-violet-600" />
               </Button>
             </div>
           </div>
-          <a
-            href={shortUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-violet-600 hover:text-violet-700 transition-colors break-all block font-medium"
+          <button
+            onClick={handleRedirect}
+            className="text-violet-600 hover:text-violet-700 transition-colors break-all block font-medium text-left w-full"
           >
             {shortUrl}
-          </a>
+          </button>
         </div>
       )}
     </div>
