@@ -4,7 +4,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useParams, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useCallback } from "react";
 import Index from "./pages/Index";
 import { useToast } from "@/components/ui/use-toast";
 
@@ -16,32 +16,34 @@ const RedirectComponent = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
 
-  useEffect(() => {
-    const fetchOriginalUrl = async () => {
-      try {
-        const response = await fetch(`${BACKEND_URL}/shorten/${shortCode}`);
-        if (!response.ok) {
-          throw new Error('Failed to fetch original URL');
-        }
-        const data = await response.json();
-        // Using replace instead of href to prevent navigation history issues
-        window.location.replace(data.originalUrl);
-      } catch (error) {
-        toast({
-          title: "Error",
-          description: "Failed to redirect to original URL",
-          variant: "destructive",
-        });
-        navigate('/');
+  const fetchOriginalUrl = useCallback(async () => {
+    try {
+      const response = await fetch(`${BACKEND_URL}/shorten/${shortCode}`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch original URL');
       }
-    };
-
-    if (shortCode && shortCode !== 'undefined') {
-      fetchOriginalUrl();
-    } else {
+      const data = await response.json();
+      window.location.replace(data.originalUrl);
+    } catch (error) {
+      console.error('Redirect error:', error);
+      toast({
+        title: "Error",
+        description: "Failed to redirect to original URL",
+        variant: "destructive",
+      });
       navigate('/');
     }
   }, [shortCode, navigate, toast]);
+
+  useEffect(() => {
+    if (shortCode && shortCode !== 'undefined') {
+      console.log('Fetching URL for shortCode:', shortCode);
+      fetchOriginalUrl();
+    } else {
+      console.log('Invalid shortCode, navigating to home');
+      navigate('/');
+    }
+  }, [shortCode, fetchOriginalUrl]);
 
   return null;
 };
