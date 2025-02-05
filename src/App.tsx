@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -5,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useParams, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import Index from "./pages/Index";
+import { useToast } from "@/components/ui/use-toast";
 
 const RedirectComponent = () => {
   const { shortCode } = useParams();
@@ -19,7 +21,8 @@ const RedirectComponent = () => {
           throw new Error('Failed to fetch original URL');
         }
         const data = await response.json();
-        window.location.href = data.originalUrl;
+        // Using replace instead of href to prevent navigation history issues
+        window.location.replace(data.originalUrl);
       } catch (error) {
         toast({
           title: "Error",
@@ -30,10 +33,12 @@ const RedirectComponent = () => {
       }
     };
 
-    if (shortCode) {
+    if (shortCode && shortCode !== 'undefined') {
       fetchOriginalUrl();
+    } else {
+      navigate('/');
     }
-  }, [shortCode, navigate]);
+  }, [shortCode, navigate, toast]);
 
   return null;
 };
