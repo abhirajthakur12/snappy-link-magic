@@ -1,8 +1,11 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
 import { Link2, Copy, ExternalLink } from "lucide-react";
+
+const BACKEND_URL = "http://localhost:8080"; // Adjust this to match your Golang backend URL
 
 export const UrlShortenerForm = () => {
   const [url, setUrl] = useState("");
@@ -23,7 +26,7 @@ export const UrlShortenerForm = () => {
 
     setIsLoading(true);
     try {
-      const response = await fetch('/shorten', {
+      const response = await fetch(`${BACKEND_URL}/shorten`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

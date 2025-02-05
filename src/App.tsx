@@ -8,6 +8,9 @@ import { useEffect } from "react";
 import Index from "./pages/Index";
 import { useToast } from "@/components/ui/use-toast";
 
+// Define backend base URL
+const BACKEND_URL = "http://localhost:8080"; // Adjust this to match your Golang backend URL
+
 const RedirectComponent = () => {
   const { shortCode } = useParams();
   const navigate = useNavigate();
@@ -16,7 +19,7 @@ const RedirectComponent = () => {
   useEffect(() => {
     const fetchOriginalUrl = async () => {
       try {
-        const response = await fetch(`/shorten/${shortCode}`);
+        const response = await fetch(`${BACKEND_URL}/shorten/${shortCode}`);
         if (!response.ok) {
           throw new Error('Failed to fetch original URL');
         }
