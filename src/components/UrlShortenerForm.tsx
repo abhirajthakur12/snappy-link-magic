@@ -36,7 +36,8 @@ export const UrlShortenerForm = () => {
       }
 
       const data = await response.json();
-      const newShortUrl = `https://short.url/${data.shortCode}`;
+      // Use window.location.origin to get the current domain
+      const newShortUrl = `${window.location.origin}/${data.shortCode}`;
       setShortUrl(newShortUrl);
       toast({
         title: "Success!",
@@ -61,24 +62,8 @@ export const UrlShortenerForm = () => {
     });
   };
 
-  const handleRedirect = async () => {
-    const shortCode = shortUrl.split('/').pop();
-    if (shortCode) {
-      try {
-        const response = await fetch(`/shorten/${shortCode}`);
-        if (!response.ok) {
-          throw new Error('Failed to fetch original URL');
-        }
-        const data = await response.json();
-        window.open(data.originalUrl, '_blank');
-      } catch (error) {
-        toast({
-          title: "Error",
-          description: "Failed to redirect to original URL",
-          variant: "destructive",
-        });
-      }
-    }
+  const handleRedirect = () => {
+    window.open(shortUrl, '_blank');
   };
 
   return (
